@@ -1,3 +1,63 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Ustawienie body jako kontener flexboxa */
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #a3b18a; /* Main background color */
+    color: #fdf0d5; /* Text color for body */
+    padding-top: 60px; /* Adjust based on navbar height */
+    padding-bottom: 60px;
+}
+
+.navbar {
+    background-color: #a3b18a; /* Navbar background color */
+    color: #fdf0d5;
+}
+
+.navbar-brand {
+    color: #fdf0d5;
+}
+
+.navbar-text {
+    color: #fdf0d5;
+    font-weight: bold;
+}
+
+.navbar .nav-link {
+    color: #fdf0d5; /* Text color for navbar links */
+    transition: color 0.3s; /* Smooth transition for color change */
+}
+
+.navbar .nav-link:hover {
+    color: #3a5a40; /* Change color on hover to dark green */
+}
+
+/* Footer adjustments */
+footer {
+    text-align: center;
+    background-color: #a3b18a; /* Footer background color */
+    padding: 5px; /* Padding for the footer */
+}
+
+.btn-custom {
+    background-color: #3a5a40; /* Button color */
+    color: #dad7cd; /* Button text color */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for colors */
+}
+
+/* Button hover and active states */
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active {
+    background-color: #dad7cd; /* Change button background on hover */
+    color: #3a5a40; /* Change button text color on hover */
+}
+
+.custom-link {
+    color: #3a5a40;
+}
+
+.custom-link:hover {
+    color: #fdf0d5;
+}
