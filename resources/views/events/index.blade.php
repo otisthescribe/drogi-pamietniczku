@@ -1,27 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="align-items-center">
+<div class="align-items-center text-center">
     <section id="timeline">
         <h1>Historia tej strony</h1>
         <p class="leader">Od zeszłego tygodnia do dzisiaj...</p>
-        <div class="demo-card-wrapper">
+        <div class="events">
             @foreach ($events as $event)
-            <div class="demo-card demo-card--step{{ $loop->index + 1 }} {{ $loop->index % 2 == 0 ? 'left' : 'right' }}">
-                <div class="card-head">
-                    <div class="number-box" style="background-color: {{ $event->category->color }};">
-                        <span>{{ $loop->index + 1 }}</span>
-                    </div>
-                    <div class="title-box">
-                        <h3>{{ $event->title }}</h3>
+            <div class="event-card row">
+                <div class="event-head col-3 " style="background-color: {{ $event->category->color }};">
+                    <div class="event-date">
+                        <div>{{ $event->start_date }}</div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <small>OD {{ $event->start_date }} DO {{ $event->end_date }}</small>
-                    <p>{{ $event->description }}</p>
-                    @if ($event->media)
-                    <img src="http://placehold.it/1000x500" alt="Graphic">
-                    @endif
+                <div class="event-body col-9">
+                    <div class="event-title" style="color: {{ $event->category->color }};">
+                        {{ $event->title }}
+                    </div>
+                    <div class="event-dates">
+                        {{ $event->start_date }} &rarr; {{ $event->end_date }}
+                    </div>
+                    <div class="event-description">
+                        <p>{{ $event->description }}</p>
+                    </div>
+                    <div>
+                        <button type="button" class="btn event-button" style="background-color: {{ $event->category->color }};">
+                            Szczegóły
+                        </button>
+                    </div>
                 </div>
             </div>
             @endforeach

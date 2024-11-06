@@ -40,8 +40,9 @@
             <!-- Right side: Authentication links -->
             <div class="navbar-nav ms-auto d-flex">
                 @auth
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin') }}">Zarządzanie</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('profile.edit') }}">Ustawienia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.events') }}">Wydarzenia</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.categories') }}">Kategorie</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('profile.edit') }}">Ustawienia konta</a></li>
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
@@ -60,12 +61,12 @@
         </nav>
 
         <!-- Page Content -->
-        <div class="align-items-center text-center">
+        <div class="w-100 p-3 page-content">
             @yield('content')
         </div>
 
         <!-- Footer -->
-        <footer class="text-center py-3 fixed-bottom">
+        <footer class="text-center py-2 fixed-bottom">
             <p>&copy; {{ date('Y') }} Drogi Pamiętniczku... Wszystkie prawa zastrzeżone.</p>
         </footer>
 

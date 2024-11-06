@@ -10,6 +10,12 @@ body {
     padding-bottom: 60px;
 }
 
+.page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .navbar {
     background-color: #a3b18a; /* Navbar background color */
     color: #fdf0d5;
