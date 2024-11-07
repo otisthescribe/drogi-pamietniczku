@@ -18,11 +18,15 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/admin/events', [EventController::class, 'list'])->name('admin.events')->middleware('auth');
+Route::get('/admin/events/add', [EventController::class, 'add'])->name('admin.events.add')->middleware('auth');
+Route::post('/admin/events/store', [EventController::class, 'store'])->name('admin.events.store')->middleware('auth');
 Route::get('/admin/events/edit/{id}', [EventController::class, 'edit'])->name('admin.events.edit')->middleware('auth');
 Route::patch('/admin/events/update/{id}', [EventController::class, 'update'])->name('admin.events.update')->middleware('auth');
 Route::delete('/admin/events/destroy/{id}', [EventController::class, 'destroy'])->name('admin.events.destroy')->middleware('auth');
 
 Route::get('/admin/categories', [CategoryController::class, 'list'])->name('admin.categories')->middleware('auth');
+Route::view('/admin/categories/add', "categories.add")->name('admin.categories.add')->middleware('auth');
+Route::post('/admin/categories/store', [CategoryController::class, 'store'])->name('admin.categories.store')->middleware('auth');
 Route::get('/admin/categories/edit/{id}', [CategoryController::class, 'edit'])->name('admin.categories.edit')->middleware('auth');
 Route::patch('/admin/categories/update/{id}', [CategoryController::class, 'update'])->name('admin.categories.update')->middleware('auth');
 Route::delete('/admin/categories/destroy/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy')->middleware('auth');

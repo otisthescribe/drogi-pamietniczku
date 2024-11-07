@@ -6,59 +6,100 @@ use App\Models\Category;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
-    public function index()
-    {
-        $categories = Category::get();
-        return view('categories.index', compact('categories'));
-    }
-
     public function list()
     {
         $categories = Category::get();
         return view('categories.list', compact('categories'));
     }
 
-    public function create()
+    public function add()
     {
-        return view('categories.create');
+        return view('categories.add');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'color' => 'required|string',
-            'icon_path' => 'nullable|url',
+            'name' => 'required|string|max:255', // Validate name
+            'color' => 'required|string|size:7', // Validate color
+            'icon_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
         ]);
 
-        Category::create([
-            'name' => $request->name,
-            'color' => $request->color,
-            'icon_path' => $request->icon_path,
-        ]);
+        // Create a new category instance
+        $category = new Category();
+        $category->name = $request->name;
+        $category->color = $request->color;
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        // Handle the uploaded file
+        if ($request->hasFile('icon_path')) {
+            // Get the uploaded file
+            $file = $request->file('icon_path');
+            
+            // Define the path for storage
+            $path = 'icons/' . time() . '_' . $file->getClientOriginalName(); // Unique file name
+
+            // Store the file content in the specified path
+            Storage::disk('public')->put($path, file_get_contents($file));
+
+            // Save the path to the database
+            $category->icon_path = $path;
+        }
+
+        // Save the category to the database
+        $category->save();
+
+        return redirect()->route('admin.categories')->withSuccess("Kategoria '$request->name' została stworzona!");
     }
 
-    public function edit(Category $category)
+    public function edit($id)
     {
+        // Retrieve the category by its ID
+        $category = Category::findOrFail($id);
+        
+        // Pass the category to the edit view
         return view('categories.edit', compact('category'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
+        // Find category
+        $category = Category::findOrFail($id);
+
+        // Validate the incoming request data
         $request->validate([
             'name' => 'required|string|max:255',
-            'color' => 'required|string',
-            'icon_path' => 'nullable|url',
+            'color' => 'required|string|size:7', // Validate color format (#RRGGBB)
+            'icon_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
         ]);
+    
+        // Handle the uploaded file
+        if ($request->hasFile('icon_path')) {
+            // Delete the old icon if it exists
+            if ($category->icon_path) {
+                Storage::disk('public')->delete($category->icon_path);
+            }
+    
+            // Get the uploaded file
+            $file = $request->file('icon_path');
 
-        $category->update($request->only('name', 'color', 'icon_path'));
+            // Define the path for storage
+            $path = 'icons/' . time() . '_' . $file->getClientOriginalName(); // Unique file name
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+            // Store the file content in the specified path
+            Storage::disk('public')->put($path, file_get_contents($file));
+
+            // Save the new path to the database
+            $category->icon_path = $path; 
+        }
+    
+        // Update the category with the new data
+        $category->update($request->only('name', 'color'));
+    
+        return redirect()->route('admin.categories')->withSuccess("Kategoria '$category->name' została zaktualizowana!");
     }
 
     public function destroy($id)
@@ -71,6 +112,12 @@ class CategoryController extends Controller
 
         if ($hasEvents) {
             return redirect()->route('admin.categories')->withErrors("Kategoria '$category->name' jest używana przez wydarzenia.");
+        }
+
+        // Delete the associated icon if it exists
+        if ($category->icon_path) {
+            // Use the Storage facade to delete the file
+            Storage::disk('public')->delete($category->icon_path);
         }
         
         // Delete the category

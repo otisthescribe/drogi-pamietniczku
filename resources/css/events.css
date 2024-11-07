@@ -16,11 +16,7 @@
         0 18px 36px -18px rgba(0, 0, 0, 0.3),
         0 -12px 36px -8px rgba(0, 0, 0, 0.025);
         .event-head {
-            color: #fff;
-            font-size: 1.5rem;
-            font-weight: 600;
             white-space: nowrap;
-            display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 8px 0 0 8px;
@@ -58,6 +54,9 @@
             .event-button {
                 color: #fff;
             }
+            .event-button:hover {
+                filter: brightness(85%);
+            }
         }
     }
 }
@@ -65,5 +64,32 @@
 .table {
     .badge {
         color: #fdf0d5;
+    }
+}
+
+.event-modal {
+    color: #0a0908;
+    .modal-content {
+        background-color: #edf6f9;
+        .modal-header {
+            display: block;
+            .modal-title {
+                font-family: "Roboto", serif;
+                font-size: 1.2rem;
+                line-height: 1.4;
+                text-transform: uppercase;
+                font-weight: 450;
+                letter-spacing: 1.5px;
+            }
+        }
+        .modal-body-header {
+            font-family: "Roboto", serif;
+            font-weight: 700;
+            font-style: normal;
+            line-height: 1.4;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #6f1d1b
+        }
     }
 }

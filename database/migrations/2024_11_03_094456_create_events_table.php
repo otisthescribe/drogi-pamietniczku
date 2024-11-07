@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->date('start_date');
             $table->date('end_date');
-            $table->string('description');
-            $table->string('image_path');
+            $table->longText('description');
+            $table->string('image_path')->nullable();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('category_id')->references('id')->on('categories');
             $table->timestamps();

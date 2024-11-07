@@ -3,20 +3,28 @@
 @section('content')
 <div class="text-center">
     <h1 class="py-3">Logowanie</h1>
+    @if ($errors->any())
+    <div class="alert alert-danger text-danger fw-bold my-3">
+        🚫 {{ $errors->first() }} 🚫
+    </div>
+    @endif 
+    @if(session('success'))
+    <div class="alert alert-success text-success fw-bold my-3">
+        🎉 {{ session('success') }} 🎉
+    </div>
+    @endif 
     <form method="POST" action="{{ route('login') }}">
         @csrf
         <!-- Email Address -->
         <div class="form-group">
             <label for="email">Adres email</label>
             <input id="email" class="form-control block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
         </br>
         <!-- Password -->
         <div class="form-group">
             <label for="password">Hasło</label>
             <input id="password" class="form-control block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
         </br>
         <!-- Remember Me -->
