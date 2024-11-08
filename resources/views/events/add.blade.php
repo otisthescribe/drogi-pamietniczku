@@ -46,6 +46,7 @@
         </div>
 
         <button type="submit" class="btn btn-custom my-4">Dodaj</button>
+        <button type="button" class="btn btn-danger my-4" onclick="window.history.back();">Anuluj</button>
     </form>
 </div>
 @endsection
