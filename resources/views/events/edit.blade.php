@@ -26,9 +26,7 @@
 
         <div class="mb-3">
             <label for="description" class="form-label">Opis</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required>
-                {{ old('description', htmlspecialchars($event->description)) }}
-            </textarea>
+            <textarea class="form-control" id="description" name="description" rows="3" required>{{ old('description', htmlspecialchars($event->description)) }}</textarea>
         </div>
 
         <div class="row">
