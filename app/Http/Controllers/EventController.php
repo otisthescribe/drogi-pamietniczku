@@ -12,13 +12,13 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Event::with('category')->with('user')->orderBy('start_date')->get();
+        $events = Event::with('category')->with('user')->orderBy('start_date', 'desc')->get();
         return view('events.index', compact('events'));
     }
 
     public function list()
     {
-        $events = Event::with('category')->with('user')->orderBy('start_date')->get();
+        $events = Event::with('category')->with('user')->orderBy('start_date', 'desc')->get();
         return view('events.list', compact('events'));
     }
 
